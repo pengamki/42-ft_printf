@@ -1,12 +1,15 @@
 NAME		= libftprintf.a
 
+HDRS_DIR	= ./includes/
 SRCS_DIR	= ./srcs/
-HDR_DIR		= ./includes/
 
-SRC		= ft_printf.c
+SRC		= ft_printf.c \
+		ft_putlchar.c ft_putlstr.c \
+		ft_putlptr.c \
+		ft_putlnbr.c ft_putlnbrbase.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRC))
-OBJS		= $(SRC:.c=.o)
+OBJS		= $(SRCS:%.c=%.o)
 
 
 all:		$(NAME)
@@ -14,14 +17,14 @@ all:		$(NAME)
 $(NAME):	$(OBJS)
 	ar -rc $(NAME) $(OBJS)
 
-.c.o:
-	cc -Wall -Werror -Wextra -c -I $(HEAD_DIR) $< -o $(<:.c=.o)
+%.o:		%.c
+	cc -Wall -Werror -Wextra -c -I $(HDRS_DIR) $< -o $(<:.c=.o)
 
 clean:
-	rm -rf $(OBJS)
+	rm -f $(OBJS)
 
 fclean:		clean
-	rm -rf $(NAME)
+	rm -f $(NAME)
 
 re:		fclean all
 
